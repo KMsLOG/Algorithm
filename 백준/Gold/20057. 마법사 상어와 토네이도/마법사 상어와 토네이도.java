@@ -104,5 +104,5 @@ public class Main {
             }
             
         }
-    } // end of spread
+    } // end of sandMove
 } // end of class

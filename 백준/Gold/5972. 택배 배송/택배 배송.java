@@ -4,16 +4,21 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-class Edge {
+class Edge implements Comparable<Edge> {
 	int end;
 	int dis;
 	public Edge(int end, int dis) {
 		this.end = end;
 		this.dis = dis;
 	}
+	@Override
+    public int compareTo(Edge e) {
+        return this.dis - e.dis;
+    }
 } // end of Edge
 
 public class Main {
@@ -23,7 +28,7 @@ public class Main {
     static final int INF = Integer.MAX_VALUE;
     
     static void dijstra(int start) {
-    	Queue<Edge> q = new LinkedList<>();
+    	PriorityQueue<Edge> q = new PriorityQueue<>();
     	q.add(new Edge(start,0));
     	cost[start] = 0;
     	while(!q.isEmpty()) {

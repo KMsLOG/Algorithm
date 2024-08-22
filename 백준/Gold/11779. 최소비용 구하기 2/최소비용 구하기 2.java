@@ -83,10 +83,8 @@ public class Main {
 				if(dist[next.end] > dist[cur.end] + next.cost) {
 					dist[next.end] = dist[cur.end] + next.cost;
 					pq.add(new Bus2(next.end,dist[next.end]));
-					busstop[next.end] = new ArrayList<>();
-					for(int i : busstop[cur.end]) {
-						busstop[next.end].add(i);
-					}
+					busstop[next.end] = (ArrayList<Integer>) busstop[cur.end].clone();
+					
 					busstop[next.end].add(next.end);
 				}
 			}

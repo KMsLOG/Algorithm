@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -35,7 +34,7 @@ public class Main {
 		clean(r,c,d);
 		System.out.println(cnt);
 	} // end of main
-	static int rr = 0;
+	
 	static void clean(int r, int c, int d) {
 		if(map[r][c] == 0) {
 			map[r][c] = 2;
@@ -57,7 +56,7 @@ public class Main {
 		if(!flag) {
 			int nr = r - dr[d];
 			int nc = c - dc[d];
-			if(nr<0||nr>=N || nc<0||nc>=M || map[nr][nc]==1) {
+			if(map[nr][nc]==1) {
 				return;
 			} else {
 				clean(nr,nc,d);

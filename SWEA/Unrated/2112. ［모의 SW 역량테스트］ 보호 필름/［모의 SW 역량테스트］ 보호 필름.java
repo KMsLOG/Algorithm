@@ -40,10 +40,16 @@ public class Solution {
 	} // end of main
 	
 	static void dfs(int idx, int cnt) {
+		if(check()) {
+			ans = Math.min(ans, cnt);
+			return;
+		}
+		
+		if(ans<cnt) {
+			return;
+		}
+		
 		if(idx == D) {
-			if(check()) {
-				ans = Math.min(ans, cnt);
-			}
 			return;
 		}
 		

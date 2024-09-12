@@ -13,24 +13,25 @@ public class Main {
         int K = Integer.parseInt(st.nextToken());
         
         int[] coins = new int[N];
-        boolean[] visited = new boolean[K + 1]; // Array to track visited sums
-        Queue<Integer> q = new ArrayDeque<>(); // Queue for BFS
+        boolean[] visited = new boolean[K + 1];
+        Queue<Integer> q = new ArrayDeque<>();
         
-        // Read coin denominations
+        // 코인 입력 및 초기화
         for (int i = 0; i < N; i++) {
             int coin = Integer.parseInt(br.readLine());
             coins[i] = coin;
-            // Check if coin is within the valid range
             if (coin <= K) {
-                visited[coin] = true; // Mark coin as visited
-                q.add(coin); // Add coin to the queue
+                if (!visited[coin]) {
+                    visited[coin] = true;
+                    q.add(coin);
+                }
             }
         }
         
-        // BFS initialization
         int cnt = 0;
         boolean found = false;
         
+        // BFS 수행
         while (!q.isEmpty()) {
             int size = q.size();
             cnt++;
@@ -42,7 +43,6 @@ public class Main {
                     break;
                 }
                 
-                // Explore new sums
                 for (int coin : coins) {
                     int next = cur + coin;
                     if (next <= K && !visited[next]) {
@@ -55,11 +55,11 @@ public class Main {
             if (found) break;
         }
         
-        // Output the result
+        // 결과 출력
         if (found) {
             System.out.println(cnt);
         } else {
             System.out.println(-1);
         }
-    } // end of main
-} // end of class
+    }
+}

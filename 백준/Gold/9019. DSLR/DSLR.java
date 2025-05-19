@@ -35,7 +35,7 @@ public class Main {
         }
 
         System.out.print(sb);
-    }
+    } // end of main
 
     // BFS
     static String bfs(int start, int answer) {
@@ -86,4 +86,4 @@ public class Main {
     static int doR(int num) {
         return (num % 10) * 1000 + num / 10;
     }
-}
+}// end of class

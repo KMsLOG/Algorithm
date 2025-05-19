@@ -64,7 +64,7 @@ public class Main {
             }
         }
 
-        return "answer"; // 도달 불가한 경우 (문제상 나오지 않음)
+        return "answer";
     }
 
     // D

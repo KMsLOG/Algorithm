@@ -1,0 +1,60 @@
+import java.io.*;
+import java.util.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+				Scanner sc = new Scanner(System.in);
+
+        // 사람 수
+        int N = sc.nextInt();
+
+        int[] xCoords = new int[N];
+        int[] yCoords = new int[N];
+
+        for (int i = 0; i < N; i++) {
+            xCoords[i] = sc.nextInt();
+            yCoords[i] = sc.nextInt();
+        }
+
+        // 정렬
+        Arrays.sort(xCoords);
+        Arrays.sort(yCoords);
+
+        // 중앙값 후보 구하기
+        int[] xMedians = getMedianCandidates(xCoords);
+        int[] yMedians = getMedianCandidates(yCoords);
+
+        // 최소 거리 및 좌표 저장
+        long minDistance = Long.MAX_VALUE;
+        int bestX = 0, bestY = 0;
+
+        // 중앙값 후보 조합을 모두 시도
+        for (int x : xMedians) {
+            for (int y : yMedians) {
+                long distanceSum = 0;
+                for (int i = 0; i < N; i++) {
+                    distanceSum += Math.abs(xCoords[i] - x) + Math.abs(yCoords[i] - y);
+                }
+
+                // 더 짧은 거리거나, 같은 거리일 때 좌표가 더 작으면 갱신
+                if (distanceSum < minDistance ||
+                   (distanceSum == minDistance && (x < bestX || (x == bestX && y < bestY)))) {
+                    minDistance = distanceSum;
+                    bestX = x;
+                    bestY = y;
+                }
+            }
+        }
+
+        System.out.println(bestX + " " + bestY);
+    }
+
+    // 중앙값 후보 구하기 (홀수면 1개, 짝수면 2개)
+    private static int[] getMedianCandidates(int[] sortedCoords) {
+        int N = sortedCoords.length;
+        if (N % 2 == 1) {
+            return new int[]{sortedCoords[N / 2]};
+        } else {
+            return new int[]{sortedCoords[N / 2 - 1], sortedCoords[N / 2]};
+        }
+    }
+}

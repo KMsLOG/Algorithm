@@ -1,0 +1,79 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+
+    static class Point implements Comparable<Point> {
+        int x, y;
+        Point(int x, int y) { this.x = x; this.y = y; }
+
+        @Override
+        public int compareTo(Point o) {
+            if (this.x == o.x) return Integer.compare(this.y, o.y);
+            return Integer.compare(this.x, o.x);
+        }
+    }
+
+    static Point[] points, tmp;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        points = new Point[N];
+        for (int i = 0; i < N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            points[i] = new Point(x, y);
+        }
+
+        Arrays.sort(points);
+        tmp = new Point[N];
+
+        System.out.println(closestPair(0, N - 1));
+    }
+
+    static long dist(Point a, Point b) {
+        long dx = a.x - b.x;
+        long dy = a.y - b.y;
+        return dx * dx + dy * dy;
+    }
+
+    static long closestPair(int left, int right) {
+        if (left == right) return Long.MAX_VALUE;
+
+        int mid = (left + right) / 2;
+        long d = Math.min(closestPair(left, mid), closestPair(mid + 1, right));
+
+        mergeByY(left, mid, right);
+
+        List<Point> strip = new ArrayList<>();
+        int midX = points[mid].x;
+        for (int i = left; i <= right; i++) {
+            long dx = (long)points[i].x - midX;
+            if (dx * dx < d) strip.add(points[i]);
+        }
+
+        int size = strip.size();
+        for (int i = 0; i < size; i++) {
+            for (int j = i + 1; j < size; j++) {
+                long dy = strip.get(j).y - strip.get(i).y;
+                if (dy * dy >= d) break;
+                d = Math.min(d, dist(strip.get(i), strip.get(j)));
+            }
+        }
+
+        return d;
+    }
+
+    static void mergeByY(int left, int mid, int right) {
+        int i = left, j = mid + 1, k = left;
+        while (i <= mid && j <= right) {
+            if (points[i].y <= points[j].y) tmp[k++] = points[i++];
+            else tmp[k++] = points[j++];
+        }
+        while (i <= mid) tmp[k++] = points[i++];
+        while (j <= right) tmp[k++] = points[j++];
+        for (int t = left; t <= right; t++) points[t] = tmp[t];
+    }
+}

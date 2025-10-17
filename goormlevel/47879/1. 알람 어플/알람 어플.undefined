@@ -1,0 +1,34 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String S = sc.next();
+        int K = sc.nextInt();
+        sc.close();
+
+        int n = S.length();
+
+        Integer[] sa = new Integer[n];
+        for (int i = 0; i < n; i++) sa[i] = i;
+        Arrays.sort(sa, (a, b) -> S.substring(a).compareTo(S.substring(b)));
+
+        int[] lcp = new int[n];
+        for (int i = 1; i < n; i++) {
+            int len = 0;
+            while (sa[i] + len < n && sa[i - 1] + len < n
+                   && S.charAt(sa[i] + len) == S.charAt(sa[i - 1] + len)) len++;
+            lcp[i] = len;
+        }
+
+        for (int i = 0; i < n; i++) {
+            int newSubstrings = n - sa[i] - lcp[i];
+            if (K <= newSubstrings) {
+                System.out.println(S.substring(sa[i], sa[i] + lcp[i] + K));
+                return;
+            }
+            K -= newSubstrings;
+        }
+    }
+}

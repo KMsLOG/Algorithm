@@ -1,0 +1,27 @@
+import java.io.*;
+import java.util.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		StringBuilder sb = new StringBuilder();
+		int T = Integer.parseInt(br.readLine());
+		for(int t = 0 ; t<T ;t++){
+			st = new StringTokenizer(br.readLine());
+			int X = Integer.parseInt(st.nextToken());
+			int Y = Integer.parseInt(st.nextToken());
+			int N = Integer.parseInt(st.nextToken());
+
+			int sum = Math.abs(X) + Math.abs(Y);
+
+			if(sum<=N && (N-sum)%2 == 0){
+				sb.append("YES\n");
+			} else{
+				sb.append("NO\n");
+			}
+		}
+
+		
+		System.out.println(sb);
+	}
+}

@@ -1,0 +1,56 @@
+import java.io.*;
+import java.util.*;
+class Main {
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		int N = Integer.parseInt(br.readLine());
+		for(int t = 0 ; t<N ;t++){
+			Map<String,Integer> aMap = new HashMap<>();
+			Map<String,Integer> bMap = new HashMap<>();
+			for(int i = 1 ;i<=4;i++){
+				aMap.put(Integer.toString(i),0);
+				bMap.put(Integer.toString(i),0);
+			}
+			String[] a = br.readLine().split(" ");
+			for(int i = 1 ; i<a.length ;i++){
+				aMap.put(a[i], aMap.get(a[i])+1);
+			}
+			String[] b = br.readLine().split(" ");
+			for(int i = 1 ; i<b.length ;i++){
+				bMap.put(b[i], bMap.get(b[i])+1);
+			}
+
+			//판별
+			if(aMap.get("1")==bMap.get("1") && aMap.get("2")==bMap.get("2") && aMap.get("3")==bMap.get("3") && aMap.get("4")==bMap.get("4")){
+				sb.append("D\n");
+			} else if(aMap.get("1")!=bMap.get("1") && aMap.get("2")==bMap.get("2") && aMap.get("3")==bMap.get("3") && aMap.get("4")==bMap.get("4")){
+				if(aMap.get("1")>bMap.get("1")){
+					sb.append("A\n");
+				}else{
+					sb.append("B\n");
+				}
+			} else if(aMap.get("2")!=bMap.get("2") && aMap.get("3")==bMap.get("3") && aMap.get("4")==bMap.get("4")){
+				if(aMap.get("2")>bMap.get("2")){
+					sb.append("A\n");
+				}else{
+					sb.append("B\n");
+				}
+			} else if(aMap.get("3")!=bMap.get("3") && aMap.get("4")==bMap.get("4")){
+				if(aMap.get("3")>bMap.get("3")){
+					sb.append("A\n");
+				}else{
+					sb.append("B\n");
+				}
+			} else if(aMap.get("4")!=bMap.get("4")){
+				if(aMap.get("4")>bMap.get("4")){
+					sb.append("A\n");
+				}else{
+					sb.append("B\n");
+				}
+			}
+			
+		}
+		System.out.println(sb);
+	}
+}

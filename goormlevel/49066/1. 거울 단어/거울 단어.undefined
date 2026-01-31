@@ -1,0 +1,60 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        int N = Integer.parseInt(br.readLine());
+        Map<Character, Character> map = new HashMap<>();
+        map.put('b', 'd');
+        map.put('d', 'b');
+        map.put('i', 'i');
+        map.put('l', 'l');
+        map.put('m', 'm');
+        map.put('n', 'n');
+        map.put('o', 'o');
+        map.put('p', 'q');
+        map.put('q', 'p');
+        map.put('s', 'z');
+        map.put('z', 's');
+        map.put('u', 'u');
+        map.put('v', 'v');
+        map.put('w', 'w');
+        map.put('x', 'x');
+
+        for (int t = 0; t < N; t++) {
+            String s = br.readLine();
+            int len = s.length();
+            int half = len / 2;
+            boolean flag = true;
+
+            for (int i = 0; i < half; i++) {
+                if (!map.containsKey(s.charAt(i))) {
+                    flag = false;
+                    break;
+                }
+                char c = map.get(s.charAt(i));
+
+                if (c != s.charAt(len - i - 1)) {
+                    flag = false;
+                    break;
+                }
+            }
+
+            if (flag && len % 2 != 0) {
+                char middle = s.charAt(half);
+                if (!map.containsKey(middle) || map.get(middle) != middle) {
+                    flag = false;
+                }
+            }
+
+            if (flag) {
+                sb.append("Mirror\n");
+            } else {
+                sb.append("Normal\n");
+            }
+        }
+        System.out.print(sb);
+    }
+}

@@ -1,0 +1,65 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+
+    static int[] dr = {0, 0, -1, 1};
+    static int[] dc = {1, -1, 0, 0};
+
+    static class Block {
+        int r, c, score;
+        Block(int r, int c, int score) {
+            this.r = r;
+            this.c = c;
+            this.score = score;
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        int N = Integer.parseInt(br.readLine());
+        String directions = br.readLine();
+
+        int[] scores = new int[N];
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            scores[i] = Integer.parseInt(st.nextToken());
+        }
+
+        Map<Character, Integer> dirMap = new HashMap<>();
+        dirMap.put('R', 0);
+        dirMap.put('L', 1);
+        dirMap.put('U', 2);
+        dirMap.put('D', 3);
+
+        Stack<Block> stack = new Stack<>();
+        Set<String> board = new HashSet<>();
+
+        stack.push(new Block(0, 0, 1));
+        board.add("0,0");
+
+        int r = 0, c = 0;
+        int sum = 1;
+
+        for (int i = 0; i < N; i++) {
+            int d = dirMap.get(directions.charAt(i));
+            r += dr[d];
+            c += dc[d];
+
+            String key = r + "," + c;
+
+            while (board.contains(key)) {
+                Block removed = stack.pop();
+                board.remove(removed.r + "," + removed.c);
+                sum -= removed.score;
+            }
+
+            stack.push(new Block(r, c, scores[i]));
+            board.add(key);
+            sum += scores[i];
+        }
+
+        System.out.println(sum);
+    }
+}

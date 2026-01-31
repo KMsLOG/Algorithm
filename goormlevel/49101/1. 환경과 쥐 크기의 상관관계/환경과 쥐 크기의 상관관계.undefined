@@ -1,0 +1,59 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+    static final int MAX_VAL = 100000;
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+				StringBuilder sb = new StringBuilder();
+        int N = Integer.parseInt(br.readLine());
+
+        int[] A = new int[MAX_VAL + 1];
+        int[] B = new int[MAX_VAL + 1];
+
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            A[Integer.parseInt(st.nextToken())]++;
+        }
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            B[Integer.parseInt(st.nextToken())]++;
+        }
+
+        int ansA = get(A);
+        int ansB = get(B);
+
+				sb.append(ansA+" "+ansB+"\n");
+        if (ansA > ansB) {
+            sb.append("good");
+        } else {
+            sb.append("bad");
+        }
+				System.out.println(sb);
+    }
+
+    private static int get(int[] counts) {
+        int[] sum = new int[MAX_VAL + 1];
+        for (int i = 1; i <= MAX_VAL; i++) {
+            sum[i] = sum[i - 1] + counts[i];
+        }
+
+        int max = -1;
+        int best = 0;
+
+        for (int x = 1; x <= MAX_VAL; x++) {
+            int left = Math.max(1, x - 2);
+            int right = Math.min(MAX_VAL, x + 2);
+
+            int cur= sum[right] - sum[left - 1];
+
+            if (cur > max) {
+                max = cur;
+                best = x;
+            }
+        }
+        return best;
+    }
+}

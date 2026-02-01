@@ -1,0 +1,76 @@
+import java.io.*;
+import java.util.*;
+
+class Main {
+    // 단풍나무의 위치 정보를 담을 클래스
+    static class Maple {
+        int r, c;
+        Maple(int r, int c) {
+            this.r = r;
+            this.c = c;
+        }
+    }
+
+    static int[] dr = {0, 0, -1, 1};
+    static int[] dc = {1, -1, 0, 0};
+
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int N = Integer.parseInt(br.readLine());
+        int[][] map = new int[N][N];
+        
+        // 물들지 않은 단풍나무(S > 0)의 좌표를 저장할 큐
+        Queue<Maple> q = new ArrayDeque<>();
+
+        for (int i = 0; i < N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < N; j++) {
+                map[i][j] = Integer.parseInt(st.nextToken());
+                if (map[i][j] > 0) {
+                    q.add(new Maple(i, j));
+                }
+            }
+        }
+
+        int days = 0;
+
+        while (!q.isEmpty()) {
+            days++;
+            
+            int size = q.size();
+            int[][] meltAmount = new int[N][N];
+
+            for (int i = 0; i < size; i++) {
+                Maple cur = q.poll();
+                int zeroCount = 0;
+                
+                for (int d = 0; d < 4; d++) {
+                    int nr = cur.r + dr[d];
+                    int nc = cur.c + dc[d];
+                    
+                    if (nr >= 0 && nr < N && nc >= 0 && nc < N) {
+                        if (map[nr][nc] == 0) {
+                            zeroCount++;
+                        }
+                    }
+                }
+                meltAmount[cur.r][cur.c] = zeroCount;
+                q.add(cur);
+            }
+
+            for (int i = 0; i < size; i++) {
+                Maple cur = q.poll();
+                
+                map[cur.r][cur.c] -= meltAmount[cur.r][cur.c];
+                
+                if (map[cur.r][cur.c] <= 0) {
+                    map[cur.r][cur.c] = 0;
+                } else {
+                    q.add(cur);
+                }
+            }
+        }
+
+        System.out.println(days);
+    }
+}

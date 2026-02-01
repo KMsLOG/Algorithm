@@ -1,0 +1,19 @@
+import java.io.*;
+import java.util.*;
+import java.math.*;
+
+class Main {
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        
+        BigInteger result = BigInteger.ONE;
+        
+        while (st.hasMoreTokens()) {
+            BigInteger num = new BigInteger(st.nextToken());
+            result = result.multiply(num);
+        }
+        
+        System.out.println(result.toString());
+    }
+}
